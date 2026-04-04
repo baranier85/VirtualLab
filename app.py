@@ -46,6 +46,23 @@ if uploaded_file is not None:
             sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=k_size)
             processed = np.sqrt(sobelx**2 + sobely**2).astype(np.uint8)
             st.image(processed, use_container_width=True)
+        elif experiment == "Histogram Equalization":
+            st.header("Experiment 2: Histogram Equalization")
             
+            # Convert to grayscale for processing
+            gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
+            
+            # Apply Global Histogram Equalization
+            equalized = cv2.equalizeHist(gray)
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.image(gray, caption="Original Grayscale", use_container_width=True)
+                st.bar_chart(np.histogram(gray, bins=256, range=(0, 255))[0])
+                
+            with col2:
+                st.image(equalized, caption="Equalized Image", use_container_width=True)
+                st.bar_chart(np.histogram(equalized, bins=256, range=(0, 255))[0])
+                    
 else:
     st.info("Please upload an image from the sidebar to begin.")
