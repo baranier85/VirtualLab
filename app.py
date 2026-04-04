@@ -11,7 +11,7 @@ st.sidebar.header("Lab Controls")
 # --- 1. Experiment Selection ---
 experiment = st.sidebar.selectbox(
     "Select an Experiment",
-    ["Introduction", "Point Processing (Gamma)", "Edge Detection (Sobel)", "Thresholding"]
+    ["Introduction", "Point Processing (Gamma)", "Edge Detection (Sobel)", "Histogram Equalization", "Thresholding"]
 )
 
 # --- 2. Image Upload ---
