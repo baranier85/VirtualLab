@@ -18,6 +18,46 @@ with tab1:
 with tab2:
     st.subheader("The Mathematics of DIP")
     st.write("Here you can add images of formulas or diagrams.")
+    with tab2:
+    st.header("Mathematical Foundations")
+    theory_choice = st.selectbox("Select Theory to Review", 
+                                ["Gamma Correction", "Histogram Equalization", "Mean Filter", "Thresholding"])
+
+    if theory_choice == "Gamma Correction":
+        st.subheader("Power-Law (Gamma) Transformations")
+        st.write("Gamma correction is used to capture the non-linear relationship between pixel value and the perceived brightness.")
+        st.latex(r"s = c \cdot r^{\gamma}")
+        st.markdown("""
+        - **r**: Input gray level.
+        - **s**: Output gray level.
+        - **c**: A constant (usually 1).
+        - **γ < 1**: Expands dark regions (brightens image).
+        - **γ > 1**: Compresses dark regions (darkens image).
+        """)
+
+    elif theory_choice == "Histogram Equalization":
+        st.subheader("Histogram Equalization (HE)")
+        st.write("HE is a spatial domain method that redistributes the probability distribution of pixels.")
+        st.latex(r"s_k = T(r_k) = (L-1) \sum_{j=0}^{k} p_r(r_j)")
+        st.markdown("""
+        Where $p_r(r_j)$ is the probability of occurrence of intensity level $r_j$. This formula represents the **Cumulative Distribution Function (CDF)**.
+        """)
+        
+
+    elif theory_choice == "Mean Filter":
+        st.subheader("Linear Smoothing (Mean Filter)")
+        st.write("The mean filter is a sliding window spatial filter that replaces the center value with the average of all pixel values in the kernel window.")
+        st.latex(r"g(x,y) = \frac{1}{M \times N} \sum_{i \in S} \sum_{j \in S} f(i,j)")
+        st.markdown("""
+        This filter is a **Low Pass Filter**, meaning it removes high-frequency noise but also blurs sharp edges.
+        """)
+        
+
+    elif theory_choice == "Thresholding":
+        st.subheader("Image Segmentation via Thresholding")
+        st.write("Thresholding creates a binary image based on an intensity constant $T$.")
+        st.latex(r"g(x,y) = \begin{cases} 255 & \text{if } f(x,y) > T \\ 0 & \text{if } f(x,y) \leq T \end{cases}")
+        st.write("In **Otsu's Method**, the threshold $T$ is chosen to minimize the within-class variance.")
     # Example: 
     st.latex(r"g(x,y) = \sum_{s=-a}^{a} \sum_{t=-b}^{b} w(s,t) f(x+s, y+t)")
 
