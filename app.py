@@ -18,7 +18,6 @@ with tab1:
 with tab2:
     st.subheader("The Mathematics of DIP")
     st.write("Here you can add images of formulas or diagrams.")
-    with tab2:
     st.header("Mathematical Foundations")
     theory_choice = st.selectbox("Select Theory to Review", 
                                 ["Gamma Correction", "Histogram Equalization", "Mean Filter", "Thresholding"])
