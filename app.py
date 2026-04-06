@@ -57,8 +57,8 @@ with tab2:
         st.write("Thresholding creates a binary image based on an intensity constant $T$.")
         st.latex(r"g(x,y) = \begin{cases} 255 & \text{if } f(x,y) > T \\ 0 & \text{if } f(x,y) \leq T \end{cases}")
         st.write("In **Otsu's Method**, the threshold $T$ is chosen to minimize the within-class variance.")
-    # Example: 
-    st.latex(r"g(x,y) = \sum_{s=-a}^{a} \sum_{t=-b}^{b} w(s,t) f(x+s, y+t)")
+        # Example: 
+        st.latex(r"g(x,y) = \sum_{s=-a}^{a} \sum_{t=-b}^{b} w(s,t) f(x+s, y+t)")
 
 with tab3:
     # Move the Quiz code here
