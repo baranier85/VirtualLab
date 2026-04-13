@@ -20,7 +20,7 @@ with tab2:
     st.write("Here you can add images of formulas or diagrams.")
     st.header("Mathematical Foundations")
     theory_choice = st.selectbox("Select Theory to Review", 
-                                ["Gamma Correction", "Histogram Equalization", "Mean Filter", "Thresholding"])
+                                ["Introduction","Gamma Correction", "Histogram Equalization", "Mean Filter", "Thresholding"])
 
     if theory_choice == "Introduction":
         st.subheader("Introduction to DIP")
@@ -194,7 +194,7 @@ if uploaded_file is not None:
             st.metric("Mean Squared Error (MSE)", round(mse, 2))
             st.info("A lower MSE indicates a better restoration. Notice how a larger kernel reduces noise but also blurs the edges.")
                     
-        elif experiment == "Basic Thresholding":
+        elif experiment == "Thresholding":
             st.header("Experiment 6: Image Binarization")
             st.info("Convert a grayscale image into a binary (Black & White) image.")
 
