@@ -71,7 +71,7 @@ with tab3:
 # --- 1. Experiment Selection ---
 experiment = st.sidebar.selectbox(
     "Select an Experiment",
-    ["1. Introduction", "2. Point Processing (Gamma)", "3. Edge Detection (Sobel)", "4. Histogram Equalization", "5. Mean Filtering", "6. Thresholding"]
+    ["1. Introduction", "2. Point Processing (Gamma)", "3. Edge Detection (Sobel)", "4. Histogram Equalization", "5. Image Restoration (Mean Filter)", "6. Thresholding"]
 )
 
 # --- 2. Image Upload ---
