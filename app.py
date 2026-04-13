@@ -22,7 +22,7 @@ with tab2:
     theory_choice = st.selectbox("Select Theory to Review", 
                                 ["Gamma Correction", "Histogram Equalization", "Mean Filter", "Thresholding"])
 
-    if theory_choice == "Introduction"
+    if theory_choice == "Introduction":
         st.subheader("Introduction to DIP")
         st.write("The Matrix Representation of ImagesA digital image is a 2D function $f(x, y)$, where $x$ and $y$ are spatial coordinates. The value of $f$ at any point $(x, y)$ is the intensity or gray level of the image at that point.Grayscale Image: Represented as a 2D matrix $M \times N$. Each element $I(i,j)$ typically ranges from 0 (Black) to 255 (White).Color Image (RGB): Represented as a 3D matrix $M \times N \times 3$. The three "planes" represent Red, Green, and Blue intensities")
     
