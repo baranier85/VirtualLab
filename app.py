@@ -20,7 +20,7 @@ with tab2:
     st.write("Here you can add images of formulas or diagrams.")
     st.header("Mathematical Foundations")
     theory_choice = st.selectbox("Select Theory to Review", 
-                                ["Introduction","Gamma Correction", "Histogram Equalization", "Mean Filter", "Thresholding"])
+                                ["1. Introduction","2. Point operation - Gamma Correction", "3. Edge Detection - Sobel Filter", "4. Histogram Equalization", "5. Mean Filter", "6. Thresholding"])
 
     if theory_choice == "Introduction":
         st.subheader("Introduction to DIP")
@@ -71,7 +71,7 @@ with tab3:
 # --- 1. Experiment Selection ---
 experiment = st.sidebar.selectbox(
     "Select an Experiment",
-    ["Introduction", "Point Processing (Gamma)", "Edge Detection (Sobel)", "Histogram Equalization", "Thresholding", "Mean Filtering"]
+    ["1. Introduction", "2. Point Processing (Gamma)", "3. Edge Detection (Sobel)", "4. Histogram Equalization", "5. Mean Filtering", "6. Thresholding"]
 )
 
 # --- 2. Image Upload ---
@@ -92,7 +92,7 @@ if uploaded_file is not None:
     with col2:
         st.subheader("Processed Image")
 
-        if experiment == "Introduction":
+        if experiment == "1. Introduction":
             st.header("Experiment 1: Image Fundamentals")
             st.info("Goal: Understand image dimensions, pixel values, and color channels.")
 
@@ -129,7 +129,7 @@ if uploaded_file is not None:
             else:
                 st.warning("This is already a single-channel (grayscale) image.")
         
-        elif experiment == "Point Processing (Gamma)":
+        elif experiment == "2. Point Processing (Gamma)":
             st.header("Experiment 2: Point Processing")
             gamma = st.slider("Gamma Value (r)", 0.1, 5.0, 1.0)
             # Apply Gamma: s = c * r^gamma
@@ -137,7 +137,7 @@ if uploaded_file is not None:
             st.image(processed, use_container_width=True)
             st.latex(r"s = cr^{\gamma}")
 
-        elif experiment == "Edge Detection (Sobel)":
+        elif experiment == "3. Edge Detection (Sobel)":
             st.header("Experiment 3: Edge Detection using Sobel Filter")
             k_size = st.select_slider("Kernel Size", options=[3, 5, 7])
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
@@ -145,7 +145,7 @@ if uploaded_file is not None:
             sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=k_size)
             processed = np.sqrt(sobelx**2 + sobely**2).astype(np.uint8)
             st.image(processed, use_container_width=True)
-        elif experiment == "Histogram Equalization":
+        elif experiment == "4. Histogram Equalization":
             st.header("Experiment 4: Histogram Equalization")
             # Convert to grayscale for processing
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
@@ -161,7 +161,7 @@ if uploaded_file is not None:
             with col2:
                 st.image(equalized, caption="Equalized Image", use_container_width=True)
                 st.bar_chart(np.histogram(equalized, bins=256, range=(0, 255))[0])
-        elif experiment == "Image Restoration (Mean Filter)":
+        elif experiment == "5. Image Restoration (Mean Filter)":
             st.header("Experiment 5: Noise Reduction using Mean Filter")
     
             # Step 1: Add Synthetic Noise (Gaussian Noise)
@@ -194,7 +194,7 @@ if uploaded_file is not None:
             st.metric("Mean Squared Error (MSE)", round(mse, 2))
             st.info("A lower MSE indicates a better restoration. Notice how a larger kernel reduces noise but also blurs the edges.")
                     
-        elif experiment == "Thresholding":
+        elif experiment == "6. Thresholding":
             st.header("Experiment 6: Image Binarization")
             st.info("Convert a grayscale image into a binary (Black & White) image.")
 
