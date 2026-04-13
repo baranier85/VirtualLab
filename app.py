@@ -97,35 +97,35 @@ if uploaded_file is not None:
             st.info("Goal: Understand image dimensions, pixel values, and color channels.")
 
             if uploaded_file is not None:
-            # 1. Display Basic Properties
-            st.subheader("1. Image Metadata")
-            height, width, channels = img_array.shape
+                # 1. Display Basic Properties
+                st.subheader("1. Image Metadata")
+                height, width, channels = img_array.shape
         
-            col_meta1, col_meta2, col_meta3 = st.columns(3)
-            col_meta1.metric("Width", f"{width} px")
-            col_meta2.metric("Height", f"{height} px")
-            col_meta3.metric("Channels", channels)
+                col_meta1, col_meta2, col_meta3 = st.columns(3)
+                col_meta1.metric("Width", f"{width} px")
+                col_meta2.metric("Height", f"{height} px")
+                col_meta3.metric("Channels", channels)
 
             # 2. Pixel Inspection Tool
-            st.subheader("2. Pixel Value Inspector")
-            x_coord = st.number_input("X Coordinate", 0, width-1, 50)
-            y_coord = st.number_input("Y Coordinate", 0, height-1, 50)
+                st.subheader("2. Pixel Value Inspector")
+                x_coord = st.number_input("X Coordinate", 0, width-1, 50)
+                y_coord = st.number_input("Y Coordinate", 0, height-1, 50)
         
-            pixel_val = img_array[y_coord, x_coord]
-            st.write(f"Pixel value at ({x_coord}, {y_coord}) is: **{pixel_val}**")
-            st.caption("Note: For RGB, values are [R, G, B]. For Grayscale, it's a single intensity value.")
+                pixel_val = img_array[y_coord, x_coord]
+                st.write(f"Pixel value at ({x_coord}, {y_coord}) is: **{pixel_val}**")
+                st.caption("Note: For RGB, values are [R, G, B]. For Grayscale, it's a single intensity value.")
 
             # 3. Channel Splitting
-            st.subheader("3. RGB Channel Visualization")
-            if channels == 3:
-                r = img_array[:,:,0]
-                g = img_array[:,:,1]
-                b = img_array[:,:,2]
+                st.subheader("3. RGB Channel Visualization")
+                if channels == 3:
+                    r = img_array[:,:,0]
+                    g = img_array[:,:,1]
+                    b = img_array[:,:,2]
             
-                c1, c2, c3 = st.columns(3)
-                c1.image(r, caption="Red Channel", use_container_width=True)
-                c2.image(g, caption="Green Channel", use_container_width=True)
-                c3.image(b, caption="Blue Channel", use_container_width=True)
+                    c1, c2, c3 = st.columns(3)
+                    c1.image(r, caption="Red Channel", use_container_width=True)
+                    c2.image(g, caption="Green Channel", use_container_width=True)
+                    c3.image(b, caption="Blue Channel", use_container_width=True)
             else:
                 st.warning("This is already a single-channel (grayscale) image.")
         
