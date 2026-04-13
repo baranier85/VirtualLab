@@ -93,7 +93,7 @@ if uploaded_file is not None:
         st.subheader("Processed Image")
 
         if experiment == "Introduction":
-            st.header("Experiment 0: Image Fundamentals")
+            st.header("Experiment 1: Image Fundamentals")
             st.info("Goal: Understand image dimensions, pixel values, and color channels.")
 
             if uploaded_file is not None:
@@ -130,6 +130,7 @@ if uploaded_file is not None:
                 st.warning("This is already a single-channel (grayscale) image.")
         
         elif experiment == "Point Processing (Gamma)":
+            st.header("Experiment 2: Point Processing")
             gamma = st.slider("Gamma Value (r)", 0.1, 5.0, 1.0)
             # Apply Gamma: s = c * r^gamma
             processed = np.array(255*(img_array/255)**gamma, dtype='uint8')
@@ -137,6 +138,7 @@ if uploaded_file is not None:
             st.latex(r"s = cr^{\gamma}")
 
         elif experiment == "Edge Detection (Sobel)":
+            st.header("Experiment 3: Edge Detection using Sobel Filter")
             k_size = st.select_slider("Kernel Size", options=[3, 5, 7])
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=k_size)
@@ -144,8 +146,7 @@ if uploaded_file is not None:
             processed = np.sqrt(sobelx**2 + sobely**2).astype(np.uint8)
             st.image(processed, use_container_width=True)
         elif experiment == "Histogram Equalization":
-            st.header("Experiment 2: Histogram Equalization")
-            
+            st.header("Experiment 4: Histogram Equalization")
             # Convert to grayscale for processing
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             
@@ -161,7 +162,7 @@ if uploaded_file is not None:
                 st.image(equalized, caption="Equalized Image", use_container_width=True)
                 st.bar_chart(np.histogram(equalized, bins=256, range=(0, 255))[0])
         elif experiment == "Image Restoration (Mean Filter)":
-            st.header("Experiment 6: Noise Reduction using Mean Filter")
+            st.header("Experiment 5: Noise Reduction using Mean Filter")
     
             # Step 1: Add Synthetic Noise (Gaussian Noise)
             st.subheader("1. Add Noise to Image")
@@ -193,5 +194,34 @@ if uploaded_file is not None:
             st.metric("Mean Squared Error (MSE)", round(mse, 2))
             st.info("A lower MSE indicates a better restoration. Notice how a larger kernel reduces noise but also blurs the edges.")
                     
+    elif experiment == "Basic Thresholding":
+        st.header("Experiment 6: Image Binarization")
+        st.info("Convert a grayscale image into a binary (Black & White) image.")
+
+        # 1. Grayscale Conversion
+        gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
+    
+        # 2. Control Sidebar/Panel
+        method = st.radio("Thresholding Method", ["Manual Global", "Otsu's (Auto)", "Adaptive"])
+    
+        if method == "Manual Global":
+            t_val = st.slider("Select Threshold Value (T)", 0, 255, 127)
+            _, result = cv2.threshold(gray, t_val, 255, cv2.THRESH_BINARY)
+            st.write(f"Current T: {t_val}")
+        
+        elif method == "Otsu's (Auto)":
+            t_val, result = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+            st.success(f"Otsu's optimal threshold found at: {t_val}")
+        
+        elif method == "Adaptive":
+            block_size = st.select_slider("Block Size (Area size)", options=[3, 5, 7, 11, 21])
+            c_val = st.slider("Constant C (Subtracted from mean)", -10, 10, 2)
+            result = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+                                        cv2.THRESH_BINARY, block_size, c_val)
+
+        # 3. Display Results
+        col_a, col_b = st.columns(2)
+        col_a.image(gray, caption="Input Grayscale", use_container_width=True)
+        col_b.image(result, caption=f"Binary Result ({method})", use_container_width=True)
 else:
     st.info("Please upload an image from the sidebar to begin.")
