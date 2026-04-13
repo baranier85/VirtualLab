@@ -194,34 +194,34 @@ if uploaded_file is not None:
             st.metric("Mean Squared Error (MSE)", round(mse, 2))
             st.info("A lower MSE indicates a better restoration. Notice how a larger kernel reduces noise but also blurs the edges.")
                     
-    elif experiment == "Basic Thresholding":
-        st.header("Experiment 6: Image Binarization")
-        st.info("Convert a grayscale image into a binary (Black & White) image.")
+        elif experiment == "Basic Thresholding":
+            st.header("Experiment 6: Image Binarization")
+            st.info("Convert a grayscale image into a binary (Black & White) image.")
 
-        # 1. Grayscale Conversion
-        gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
+            # 1. Grayscale Conversion
+            gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
     
-        # 2. Control Sidebar/Panel
-        method = st.radio("Thresholding Method", ["Manual Global", "Otsu's (Auto)", "Adaptive"])
+            # 2. Control Sidebar/Panel
+            method = st.radio("Thresholding Method", ["Manual Global", "Otsu's (Auto)", "Adaptive"])
     
-        if method == "Manual Global":
-            t_val = st.slider("Select Threshold Value (T)", 0, 255, 127)
-            _, result = cv2.threshold(gray, t_val, 255, cv2.THRESH_BINARY)
-            st.write(f"Current T: {t_val}")
+            if method == "Manual Global":
+                t_val = st.slider("Select Threshold Value (T)", 0, 255, 127)
+                _, result = cv2.threshold(gray, t_val, 255, cv2.THRESH_BINARY)
+                st.write(f"Current T: {t_val}")
         
-        elif method == "Otsu's (Auto)":
-            t_val, result = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-            st.success(f"Otsu's optimal threshold found at: {t_val}")
+            elif method == "Otsu's (Auto)":
+                t_val, result = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                st.success(f"Otsu's optimal threshold found at: {t_val}")
         
-        elif method == "Adaptive":
-            block_size = st.select_slider("Block Size (Area size)", options=[3, 5, 7, 11, 21])
-            c_val = st.slider("Constant C (Subtracted from mean)", -10, 10, 2)
-            result = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+            elif method == "Adaptive":
+                block_size = st.select_slider("Block Size (Area size)", options=[3, 5, 7, 11, 21])
+                c_val = st.slider("Constant C (Subtracted from mean)", -10, 10, 2)
+                result = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
                                         cv2.THRESH_BINARY, block_size, c_val)
 
-        # 3. Display Results
-        col_a, col_b = st.columns(2)
-        col_a.image(gray, caption="Input Grayscale", use_container_width=True)
-        col_b.image(result, caption=f"Binary Result ({method})", use_container_width=True)
+            # 3. Display Results
+            col_a, col_b = st.columns(2)
+            col_a.image(gray, caption="Input Grayscale", use_container_width=True)
+            col_b.image(result, caption=f"Binary Result ({method})", use_container_width=True)
 else:
     st.info("Please upload an image from the sidebar to begin.")
